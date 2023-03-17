@@ -1,8 +1,5 @@
-football
 master python
-run
 rza
 gza
-ODB
 ghostface
 raekwon

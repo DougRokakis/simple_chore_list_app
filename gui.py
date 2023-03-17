@@ -9,9 +9,11 @@ add_button = sg.Button("Add")
 list_box = sg.Listbox(values=chore_functions.get_chores(), key='chores', 
                         enable_events=True, size=[45, 10])
 edit_button=sg.Button("Edit")
+complete_button = sg.Button("Completed")
+exit_button = sg.Button("Exit")
 
 window = sg.Window('Chore App', 
-                layout=[[label], [input_box, add_button], [list_box, edit_button]], font=('Helvetica', 14))
+                layout=[[label], [input_box, add_button], [list_box, edit_button, complete_button], [exit_button]], font=('Helvetica', 14))
 while True:
     event, values = window.read()
     match event:
@@ -30,6 +32,15 @@ while True:
             chores[index] = new_chore + '\n'
             chore_functions.write_chores(chores)
             window['chores'].update(values=chores)
+        case "Completed":
+            chore_to_complete = values['chores'][0]
+            chores = chore_functions.get_chores()
+            chores.remove(chore_to_complete)
+            chore_functions.write_chores(chores)
+            window['chores'].update(values=chores)
+            window['chore'].update(value='')
+        case "Exit":
+            break
         case 'chores':
             window['chore'].update(value=values['chores'][0])
         case sg.WIN_CLOSED:
